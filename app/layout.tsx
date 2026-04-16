@@ -1,5 +1,17 @@
 import type { Metadata } from "next";
+import { Fredoka, Space_Mono } from "next/font/google";
 import "./globals.css";
+
+const fontSans = Fredoka({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const fontMono = Space_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Núcleo - Proyecto Educativo",
@@ -13,7 +25,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body className={`${fontSans.variable} ${fontMono.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
