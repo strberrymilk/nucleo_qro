@@ -40,12 +40,32 @@ export default function IngresarPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const error = params.get("error");
+    const reason = params.get("reason");
 
     if (error === "google") {
       setMessage("No se pudo iniciar sesión con Google. Inténtalo de nuevo.");
     }
 
     if (error === "callback" || error === "confirm") {
+      if (reason === "missing-code") {
+        setMessage(
+          "El callback de Google llegó sin código. Revisa las Redirect URLs en Supabase.",
+        );
+        return;
+      }
+
+      if (reason === "missing-token-hash-or-type") {
+        setMessage(
+          "El correo de confirmación no trae token_hash y type=email. Revisa el template Confirm signup en Supabase.",
+        );
+        return;
+      }
+
+      if (reason) {
+        setMessage(`El enlace de autenticación no pudo validarse: ${reason}`);
+        return;
+      }
+
       setMessage("El enlace de autenticación no pudo validarse.");
     }
 

@@ -6,6 +6,12 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get("code");
   const next = requestUrl.searchParams.get("next") ?? "/cuenta";
 
+  if (!code) {
+    return NextResponse.redirect(
+      new URL("/ingresar?error=callback&reason=missing-code", request.url),
+    );
+  }
+
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
@@ -13,7 +19,16 @@ export async function GET(request: NextRequest) {
     if (!error) {
       return NextResponse.redirect(new URL(next, request.url));
     }
+
+    return NextResponse.redirect(
+      new URL(
+        `/ingresar?error=callback&reason=${encodeURIComponent(error.message)}`,
+        request.url,
+      ),
+    );
   }
 
-  return NextResponse.redirect(new URL("/ingresar?error=callback", request.url));
+  return NextResponse.redirect(
+    new URL("/ingresar?error=callback&reason=unknown", request.url),
+  );
 }
