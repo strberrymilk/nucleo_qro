@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import { getSupabaseConfig, readSupabaseError } from "@/lib/supabaseRest";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { getSiteUrl } from "@/lib/supabase/config";
+import { createClient } from "@/lib/supabase/server";
 
 type SignupBody = {
   age?: number;
@@ -25,67 +27,81 @@ const requiredFields: Array<keyof SignupBody> = [
   "motivation",
 ];
 
+function isMissing(value: unknown) {
+  return value === undefined || value === null || value === "";
+}
+
 export async function POST(request: Request) {
-  const body = (await request.json()) as SignupBody;
-  const missingField = requiredFields.find((field) => !body[field]);
+  try {
+    const body = (await request.json()) as SignupBody;
+    const missingField = requiredFields.find((field) => isMissing(body[field]));
 
-  if (missingField) {
-    return NextResponse.json(
-      { message: "Completa todos los campos para crear la cuenta." },
-      { status: 400 },
-    );
-  }
+    if (missingField) {
+      return NextResponse.json(
+        { message: "Completa todos los campos para crear la cuenta." },
+        { status: 400 },
+      );
+    }
 
-  const supabase = getSupabaseConfig();
+    if (!body.email || !body.password || body.password.length < 8) {
+      return NextResponse.json(
+        { message: "La contraseña debe tener al menos 8 caracteres." },
+        { status: 400 },
+      );
+    }
 
-  if (!supabase) {
-    return NextResponse.json({
-      demo: true,
-      message:
-        "Modo demo: la cuenta y solicitud se simularon. Configura Supabase para guardar usuarios y solicitudes.",
-    });
-  }
+    if (!body.age || body.age < 16) {
+      return NextResponse.json(
+        { message: "La edad debe ser de al menos 16 años." },
+        { status: 400 },
+      );
+    }
 
-  const signupResponse = await fetch(`${supabase.url}/auth/v1/signup`, {
-    method: "POST",
-    headers: {
-      apikey: supabase.anonKey,
-      Authorization: `Bearer ${supabase.anonKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
+    const supabase = await createClient();
+    const origin = new URL(request.url).origin;
+    const { data, error } = await supabase.auth.signUp({
       email: body.email,
       password: body.password,
-      data: {
+      options: {
+        emailRedirectTo: `${getSiteUrl(origin)}/auth/confirm`,
+        data: {
+          age: body.age,
+          city: body.city,
+          first_names: body.firstNames,
+          gender: body.gender,
+          last_names: body.lastNames,
+          school_address: body.schoolAddress,
+        },
+      },
+    });
+
+    if (error) {
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    }
+
+    const admin = createAdminClient();
+    const userId = data.user?.id ?? null;
+
+    if (userId) {
+      const { error: profileError } = await admin.from("profiles").upsert({
         age: body.age,
         city: body.city,
+        email: body.email,
         first_names: body.firstNames,
         gender: body.gender,
+        id: userId,
         last_names: body.lastNames,
-        school_address: body.schoolAddress,
-      },
-    }),
-  });
+      });
 
-  if (!signupResponse.ok) {
-    return NextResponse.json(
-      { message: await readSupabaseError(signupResponse) },
-      { status: signupResponse.status },
-    );
-  }
+      if (profileError) {
+        return NextResponse.json(
+          { message: profileError.message },
+          { status: 500 },
+        );
+      }
+    }
 
-  const signup = await signupResponse.json();
-  const databaseKey = supabase.serviceRoleKey || supabase.anonKey;
-
-  const requestResponse = await fetch(`${supabase.url}/rest/v1/school_requests`, {
-    method: "POST",
-    headers: {
-      apikey: databaseKey,
-      Authorization: `Bearer ${databaseKey}`,
-      "Content-Type": "application/json",
-      Prefer: "return=representation",
-    },
-    body: JSON.stringify({
+    const { error: requestError } = await admin.from("school_requests").insert({
       age: body.age,
       city: body.city,
       email: body.email,
@@ -94,23 +110,29 @@ export async function POST(request: Request) {
       last_names: body.lastNames,
       motivation: body.motivation,
       school_address: body.schoolAddress,
-      user_id: signup.user?.id ?? null,
-    }),
-  });
+      user_id: userId,
+    });
 
-  if (!requestResponse.ok) {
+    if (requestError) {
+      return NextResponse.json(
+        { message: requestError.message },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json({
+      message:
+        "Cuenta creada. Revisa tu correo para confirmar el acceso y dar seguimiento a la solicitud.",
+    });
+  } catch (error) {
     return NextResponse.json(
       {
         message:
-          "La cuenta se creó, pero no se pudo guardar la solicitud de escuela. Revisa la tabla school_requests en Supabase.",
-        details: await readSupabaseError(requestResponse),
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear la cuenta.",
       },
-      { status: requestResponse.status },
+      { status: 500 },
     );
   }
-
-  return NextResponse.json({
-    message:
-      "Cuenta creada. Revisa tu correo para confirmar el acceso y dar seguimiento a la solicitud.",
-  });
 }

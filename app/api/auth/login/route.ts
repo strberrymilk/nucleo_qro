@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSupabaseConfig, readSupabaseError } from "@/lib/supabaseRest";
+import { createClient } from "@/lib/supabase/server";
 
 type LoginBody = {
   email?: string;
@@ -7,49 +7,40 @@ type LoginBody = {
 };
 
 export async function POST(request: Request) {
-  const body = (await request.json()) as LoginBody;
+  try {
+    const body = (await request.json()) as LoginBody;
 
-  if (!body.email || !body.password) {
-    return NextResponse.json(
-      { message: "Correo y contraseña son obligatorios." },
-      { status: 400 },
-    );
-  }
+    if (!body.email || !body.password) {
+      return NextResponse.json(
+        { message: "Correo y contraseña son obligatorios." },
+        { status: 400 },
+      );
+    }
 
-  const supabase = getSupabaseConfig();
-
-  if (!supabase) {
-    return NextResponse.json({
-      demo: true,
-      message:
-        "Modo demo: con NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY este login autentica contra Supabase.",
-    });
-  }
-
-  const response = await fetch(`${supabase.url}/auth/v1/token?grant_type=password`, {
-    method: "POST",
-    headers: {
-      apikey: supabase.anonKey,
-      Authorization: `Bearer ${supabase.anonKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: body.email,
       password: body.password,
-    }),
-  });
+    });
 
-  if (!response.ok) {
+    if (error) {
+      return NextResponse.json({ message: error.message }, { status: 401 });
+    }
+
+    return NextResponse.json({
+      message: "Inicio de sesión exitoso.",
+      redirectTo: "/cuenta",
+      user: data.user,
+    });
+  } catch (error) {
     return NextResponse.json(
-      { message: await readSupabaseError(response) },
-      { status: response.status },
+      {
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo iniciar sesión.",
+      },
+      { status: 500 },
     );
   }
-
-  const session = await response.json();
-
-  return NextResponse.json({
-    message: "Inicio de sesión exitoso.",
-    user: session.user,
-  });
 }

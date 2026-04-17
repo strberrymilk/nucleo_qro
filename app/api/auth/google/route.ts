@@ -1,18 +1,28 @@
 import { NextResponse } from "next/server";
-import { getSupabaseConfig } from "@/lib/supabaseRest";
+import { getSiteUrl } from "@/lib/supabase/config";
+import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: Request) {
-  const supabase = getSupabaseConfig();
-  const origin = new URL(request.url).origin;
+  try {
+    const origin = new URL(request.url).origin;
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${getSiteUrl(origin)}/auth/callback?next=/cuenta`,
+      },
+    });
 
-  if (!supabase) {
+    if (error || !data.url) {
+      return NextResponse.redirect(
+        new URL("/ingresar?error=google", request.url),
+      );
+    }
+
+    return NextResponse.redirect(data.url);
+  } catch {
     return NextResponse.redirect(
-      new URL("/ingresar?message=google-demo", origin),
+      new URL("/ingresar?error=supabase-config", request.url),
     );
   }
-
-  const redirectTo = encodeURIComponent(`${origin}/ingresar`);
-  const authUrl = `${supabase.url}/auth/v1/authorize?provider=google&redirect_to=${redirectTo}`;
-
-  return NextResponse.redirect(authUrl);
 }

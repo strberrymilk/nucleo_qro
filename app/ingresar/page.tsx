@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 type Mode = "login" | "signup";
 
@@ -37,6 +37,23 @@ export default function IngresarPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get("error");
+
+    if (error === "google") {
+      setMessage("No se pudo iniciar sesión con Google. Inténtalo de nuevo.");
+    }
+
+    if (error === "callback" || error === "confirm") {
+      setMessage("El enlace de autenticación no pudo validarse.");
+    }
+
+    if (error === "supabase-config") {
+      setMessage("Faltan variables de entorno de Supabase para autenticar.");
+    }
+  }, []);
+
   const updateSignupField = (field: keyof SignupForm, value: string) => {
     setSignupForm((current) => ({ ...current, [field]: value }));
   };
@@ -54,6 +71,12 @@ export default function IngresarPage() {
 
     const result = await response.json();
     setMessage(result.message ?? "Listo.");
+
+    if (response.ok && result.redirectTo) {
+      window.location.href = result.redirectTo;
+      return;
+    }
+
     setIsSubmitting(false);
   };
 
