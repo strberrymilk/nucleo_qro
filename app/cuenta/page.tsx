@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import StatusBadge from "@/components/admin/StatusBadge";
+import type { RequestStatus } from "@/lib/admin-dashboard";
+import { getCurrentUserProfileContext } from "@/lib/auth/profile";
 
 export const dynamic = "force-dynamic";
 
@@ -10,41 +12,30 @@ type SchoolRequest = {
   id: string;
   motivation: string;
   school_address: string;
-  status: string;
+  status: RequestStatus;
 };
 
 export default async function CuentaPage() {
-  const supabase = await createClient();
-  const { data: claimsData } = await supabase.auth.getClaims();
-
-  if (!claimsData?.claims) {
-    redirect("/ingresar");
-  }
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { profile, role, supabase, user } = await getCurrentUserProfileContext();
 
   if (!user) {
     redirect("/ingresar");
   }
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("first_names,last_names,email,city")
-    .eq("id", user.id)
-    .maybeSingle();
+  if (role === "admin") {
+    redirect("/admin");
+  }
 
-  const { data: requests } = await supabase
+  const { data } = await supabase
     .from("school_requests")
     .select("id,city,school_address,motivation,status,created_at")
     .eq("user_id", user.id)
-    .order("created_at", { ascending: false })
-    .returns<SchoolRequest[]>();
+    .order("created_at", { ascending: false });
 
-  const displayName = profile
-    ? `${profile.first_names} ${profile.last_names}`
-    : user.email;
+  const requests = (data ?? []) as SchoolRequest[];
+  const displayName =
+    [profile?.first_names, profile?.last_names].filter(Boolean).join(" ") ||
+    user.email;
 
   return (
     <main className="min-h-screen bg-base-100 px-6 py-10">
@@ -52,17 +43,17 @@ export default async function CuentaPage() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <Link className="link link-hover text-sm font-bold text-primary" href="/">
-              Volver a Núcleo
+              Volver a Nucleo
             </Link>
             <h1 className="mt-4 text-4xl font-bold">Cuenta</h1>
             <p className="mt-2 text-base-content/70">
-              Hola, {displayName}. Aquí puedes revisar tus solicitudes.
+              Hola, {displayName}. Aqui puedes revisar tus solicitudes.
             </p>
           </div>
 
           <form action="/auth/signout" method="post">
             <button className="btn btn-outline rounded-md shadow-none" type="submit">
-              Cerrar sesión
+              Cerrar sesion
             </button>
           </form>
         </div>
@@ -91,7 +82,7 @@ export default async function CuentaPage() {
           <article className="rounded-md border border-base-300 bg-base-200 p-6">
             <h2 className="text-2xl font-bold">Solicitudes de escuela</h2>
 
-            {requests && requests.length > 0 ? (
+            {requests.length > 0 ? (
               <div className="mt-5 space-y-4">
                 {requests.map((request) => (
                   <div
@@ -100,13 +91,9 @@ export default async function CuentaPage() {
                   >
                     <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                       <h3 className="font-bold">{request.city}</h3>
-                      <span className="badge badge-primary rounded-md">
-                        {request.status}
-                      </span>
+                      <StatusBadge status={request.status} />
                     </div>
-                    <p className="mt-3 text-sm font-semibold">
-                      {request.school_address}
-                    </p>
+                    <p className="mt-3 text-sm font-semibold">{request.school_address}</p>
                     <p className="mt-2 text-sm leading-6 text-base-content/75">
                       {request.motivation}
                     </p>
@@ -115,7 +102,7 @@ export default async function CuentaPage() {
               </div>
             ) : (
               <p className="mt-5 text-base-content/70">
-                Todavía no hay solicitudes ligadas a esta cuenta.
+                Todavia no hay solicitudes ligadas a esta cuenta.
               </p>
             )}
           </article>

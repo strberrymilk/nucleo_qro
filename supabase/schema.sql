@@ -1,5 +1,6 @@
 -- Run this in Supabase Dashboard > SQL Editor.
--- It creates the data layer used by the Nucleo login/signup flow.
+-- It creates the data layer used by the Nucleo login/signup flow
+-- and the admin dashboard.
 
 create extension if not exists pgcrypto;
 
@@ -11,6 +12,9 @@ create table if not exists public.profiles (
   age integer,
   gender text,
   city text,
+  role text not null default 'user' constraint profiles_role_check check (
+    role in ('user', 'admin')
+  ),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -26,12 +30,44 @@ create table if not exists public.school_requests (
   city text not null,
   school_address text not null,
   motivation text not null,
-  status text not null default 'pending' check (
+  status text not null default 'pending' constraint school_requests_status_check check (
     status in ('pending', 'reviewing', 'approved', 'rejected')
   ),
+  reviewed_by uuid references auth.users (id) on delete set null,
+  reviewed_at timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.profiles add column if not exists role text;
+alter table public.profiles alter column role set default 'user';
+
+update public.profiles
+set role = 'user'
+where role is null
+   or role not in ('user', 'admin');
+
+alter table public.profiles alter column role set not null;
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'profiles_role_check'
+      and conrelid = 'public.profiles'::regclass
+  ) then
+    alter table public.profiles
+    add constraint profiles_role_check check (role in ('user', 'admin'));
+  end if;
+end;
+$$;
+
+alter table public.school_requests
+add column if not exists reviewed_by uuid references auth.users (id) on delete set null;
+
+alter table public.school_requests
+add column if not exists reviewed_at timestamptz;
 
 create or replace function public.set_updated_at()
 returns trigger
@@ -91,6 +127,21 @@ begin
 end;
 $$;
 
+create or replace function public.is_admin(check_user_id uuid default auth.uid())
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1
+    from public.profiles
+    where id = coalesce(check_user_id, auth.uid())
+      and role = 'admin'
+  );
+$$;
+
 drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
 after insert on auth.users
@@ -114,6 +165,21 @@ to authenticated
 using (auth.uid() = id)
 with check (auth.uid() = id);
 
+drop policy if exists "Admins can read all profiles" on public.profiles;
+create policy "Admins can read all profiles"
+on public.profiles
+for select
+to authenticated
+using (public.is_admin());
+
+drop policy if exists "Admins can update profiles" on public.profiles;
+create policy "Admins can update profiles"
+on public.profiles
+for update
+to authenticated
+using (public.is_admin())
+with check (public.is_admin());
+
 drop policy if exists "Users can read own school requests" on public.school_requests;
 create policy "Users can read own school requests"
 on public.school_requests
@@ -127,3 +193,18 @@ on public.school_requests
 for insert
 to authenticated
 with check (auth.uid() = user_id);
+
+drop policy if exists "Admins can read all school requests" on public.school_requests;
+create policy "Admins can read all school requests"
+on public.school_requests
+for select
+to authenticated
+using (public.is_admin());
+
+drop policy if exists "Admins can update school requests" on public.school_requests;
+create policy "Admins can update school requests"
+on public.school_requests
+for update
+to authenticated
+using (public.is_admin())
+with check (public.is_admin());

@@ -15,6 +15,20 @@ export function getSupabaseSecretKey() {
   return process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
 }
 
+export function getAdminEmails() {
+  const rawEmails =
+    process.env.NUCLEO_ADMIN_EMAILS ??
+    process.env.ADMIN_EMAILS ??
+    process.env.NUCLEO_ADMIN_EMAIL ??
+    process.env.ADMIN_EMAIL ??
+    "";
+
+  return rawEmails
+    .split(",")
+    .map((email) => email.trim().toLowerCase())
+    .filter(Boolean);
+}
+
 export function getSiteUrl(origin?: string) {
   const rawUrl =
     process.env.NEXT_PUBLIC_SITE_URL ??
