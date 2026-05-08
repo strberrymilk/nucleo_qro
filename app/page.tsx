@@ -64,14 +64,18 @@ export default function Home() {
 
           <div className="relative z-10 mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center px-6 py-20">
             <p className="mb-4 text-sm font-bold uppercase tracking-normal text-secondary">
-              Proyecto educativo en Querétaro
+              Proyecto educativo 
             </p>
             <h1 className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
               Bienvenidos a Núcleo
             </h1>
             <p className="mt-5 max-w-2xl text-lg font-medium text-white sm:text-xl">
-              Educación y comunidad para transformar El Chamizal.
+              Educación y comunidad para transformar el mundo de las infancias.
             </p>
+            <p className="mt-5 max-w-2xl text-lg font-medium text-white sm:text-xl">
+              "Cada familia es una semilla, cada niño es un mundo"
+            </p>
+
             <div className="mt-8 flex flex-wrap gap-3">
               <a className="btn btn-secondary rounded-md" href="#historia">
                 Conoce nuestra historia
@@ -87,9 +91,19 @@ export default function Home() {
           <div className="mx-auto max-w-4xl">
             <h2 className="text-3xl font-bold text-primary">Historia de Núcleo</h2>
             <p className="mt-5 text-lg leading-8 text-base-content">
-              Núcleo fue creado a través del ILO Project del Eugenio Garza Sada
-              Leadership Program. Nació con la misión de transformar la comunidad
-              de El Chamizal mediante la educación y el acompañamiento integral.
+              Núcleo nació del encuentro de cuatro jóvenes que, al coincidir 
+              en el Eugenio Garza Sada Global Leadership Program, descubrieron 
+              una preocupación común: la educación en contextos de vulnerabilidad 
+              y el papel fundamental de la familia en el desarrollo de niñas, niños y adolescentes.
+            </p>
+            <p className="mt-5 text-lg leading-8 text-base-content">
+              Lo que comenzó como una idea compartida, pronto se convirtió en una acción concreta 
+              en la comunidad de Bosques del Chamizal, en Querétaro. A partir de la escucha activa 
+              y el trabajo cercano con las familias, Núcleo fue construyendo un modelo propio que 
+              integra educación, acompañamiento familiar y desarrollo comunitario.
+            </p>
+            <p className="mt-5 text-lg leading-8 text-base-content">
+              Hoy, Núcleo es más que un programa: es una comunidad que aprende, colabora y se transforma desde dentro.
             </p>
           </div>
         </section>
@@ -99,16 +113,17 @@ export default function Home() {
             <div>
               <h2 className="text-3xl font-bold">Misión</h2>
               <p className="mt-5 text-lg leading-8">
-                Empoderar a niños, niñas y adolescentes de El Chamizal a través de
-                la educación, el arte y el deporte, fomentando valores y habilidades
-                para la vida.
+                Acompañar a niñas, niños, adolescentes y sus familias en el fortalecimiento 
+                de sus capacidades, a través de un modelo educativo colaborativo que promueve 
+                el desarrollo integral y la participación activa de la comunidad.
               </p>
             </div>
             <div>
               <h2 className="text-3xl font-bold">Visión</h2>
               <p className="mt-5 text-lg leading-8">
-                Un mundo donde todos tengan acceso a oportunidades equitativas,
-                comenzando por nuestra comunidad.
+                Ser un modelo educativo replicable que transforme comunidades desde el 
+                fortalecimiento familiar, logrando que cada niña, niño y adolescente 
+                desarrolle su potencial en entornos seguros, colaborativos y sostenibles.
               </p>
             </div>
           </div>
