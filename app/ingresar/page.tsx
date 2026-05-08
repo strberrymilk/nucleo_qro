@@ -120,19 +120,19 @@ export default function IngresarPage() {
   };
 
   return (
-    <main className="min-h-screen bg-base-100 px-6 py-10">
+    <main className="{`${poppins.variable} ${inter.variable} min-h-screen bg-base-100 px-6 py-10`}">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <section className="pt-4 lg:pt-16">
-          <Link className="link link-hover text-sm font-bold text-primary" href="/">
+          <Link className="link link-hover text-sm font-bold text-primary font-[family-name:var(--font-heading)]" href="/">
             Volver a Núcleo
           </Link>
-          <p className="mt-8 text-sm font-bold uppercase tracking-normal text-primary">
+          <p className="mt-8 text-sm font-semibold uppercase tracking-widest text-primary font-[family-name:var(--font-heading)]">
             Acceso comunitario
           </p>
-          <h1 className="mt-3 max-w-xl text-4xl font-bold leading-tight text-base-content sm:text-5xl">
+          <h1 className="mt-3 max-w-xl text-4xl font-extrabold leading-tight text-base-content sm:text-5xl font-[family-name:var(--font-heading)]">
             Entra a tu cuenta o solicita abrir una escuela.
           </h1>
-          <p className="mt-5 max-w-xl text-lg leading-8 text-base-content/75">
+          <p className="mt-5 max-w-xl text-lg leading-8 text-base-content/75 font-[family-name:var(--font-body)]">
             Usa tu correo y contraseña, entra con Google o crea una cuenta para
             iniciar una solicitud de escuela Núcleo en tu comunidad.
           </p>
@@ -141,7 +141,7 @@ export default function IngresarPage() {
         <section className="rounded-md border border-base-300 bg-base-200 p-5 sm:p-8">
           <div className="mb-8 grid grid-cols-[1fr_auto_1fr] items-center rounded-md border border-base-300 bg-base-100 p-1">
             <button
-              className={`rounded-md px-4 py-3 text-sm font-bold transition ${
+              className={`rounded-md px-4 py-3 text-sm font-bold transition font-[family-name:var(--font-heading)] ${
                 mode === "login" ? "bg-primary text-primary-content" : "text-base-content"
               }`}
               type="button"
@@ -154,7 +154,7 @@ export default function IngresarPage() {
             </button>
             <span className="mx-1 h-8 w-px bg-base-300" aria-hidden="true" />
             <button
-              className={`rounded-md px-4 py-3 text-sm font-bold transition ${
+              className={`rounded-md px-4 py-3 text-sm font-bold transition font-[family-name:var(--font-heading)]  ${
                 mode === "signup" ? "bg-primary text-primary-content" : "text-base-content"
               }`}
               type="button"
@@ -170,16 +170,16 @@ export default function IngresarPage() {
           {mode === "login" ? (
             <form className="flex flex-col gap-5" onSubmit={submitLogin}>
               <div>
-                <h2 className="text-2xl font-bold">Ingresar</h2>
-                <p className="mt-2 text-sm text-base-content/70">
+                <h2 className="text-2xl font-bold font-[family-name:var(--font-heading)]">Ingresar</h2>
+                <p className="mt-2 text-sm text-base-content/70 font-[family-name:var(--font-body)]">
                   Accede con tu correo o continúa con Google.
                 </p>
               </div>
 
               <label className="flex flex-col gap-2">
-                <span className="label-text font-semibold">Correo</span>
+                <span className="label-text font-semibold font-[family-name:var(--font-heading)]">Correo</span>
                 <input
-                  className="input input-bordered w-full rounded-md"
+                  className="input input-bordered w-full rounded-md font-[family-name:var(--font-body)]"
                   type="email"
                   autoComplete="email"
                   value={email}
@@ -189,9 +189,9 @@ export default function IngresarPage() {
               </label>
 
               <label className="flex flex-col gap-2">
-                <span className="label-text font-semibold">Contraseña</span>
+                <span className="label-text font-semibold font-[family-name:var(--font-heading)]">Contraseña</span>
                 <input
-                  className="input input-bordered w-full rounded-md"
+                  className="input input-bordered w-full rounded-md font-[family-name:var(--font-body)]"
                   type="password"
                   autoComplete="current-password"
                   value={password}
@@ -201,23 +201,23 @@ export default function IngresarPage() {
               </label>
 
               <button
-                className="btn btn-primary mt-1 w-full rounded-md shadow-none"
+                className="btn btn-primary mt-1 w-full rounded-md shadow-none font-[family-name:var(--font-heading)]"
                 type="submit"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Ingresando..." : "Ingresar"}
               </button>
 
-              <div className="divider">o</div>
+              <div className="divider font-[family-name:var(--font-body)]">o</div>
 
-              <a className="btn btn-outline w-full rounded-md shadow-none" href="/api/auth/google">
+              <a className="btn btn-outline w-full rounded-md shadow-none font-[family-name:var(--font-heading)]" href="/api/auth/google">
                 Continuar con Google
               </a>
 
-              <p className="text-center text-sm">
+              <p className="text-center text-sm font-[family-name:var(--font-body)]">
                 ¿No tienes cuenta?{" "}
                 <button
-                  className="link link-primary font-bold"
+                  className="link link-primary font-bold font-[family-name:var(--font-heading)]"
                   type="button"
                   onClick={() => {
                     setMode("signup");
@@ -231,17 +231,17 @@ export default function IngresarPage() {
           ) : (
             <form className="flex flex-col gap-5" onSubmit={submitSignup}>
               <div>
-                <h2 className="text-2xl font-bold">Crear cuenta</h2>
-                <p className="mt-2 text-sm text-base-content/70">
+                <h2 className="text-2xl font-bold font-[family-name:var(--font-heading)]">Crear cuenta</h2>
+                <p className="mt-2 text-sm text-base-content/70 font-[family-name:var(--font-body)]">
                   Cuéntanos quién eres y dónde quieres llevar una escuela Núcleo.
                 </p>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="flex flex-col gap-2">
-                  <span className="label-text font-semibold">Nombres</span>
+                  <span className="label-text font-semibold font-[family-name:var(--font-heading)]">Nombres</span>
                   <input
-                    className="input input-bordered w-full rounded-md"
+                    className="input input-bordered w-full rounded-md font-[family-name:var(--font-body)]"
                     value={signupForm.firstNames}
                     onChange={(event) => updateSignupField("firstNames", event.target.value)}
                     required
@@ -249,9 +249,9 @@ export default function IngresarPage() {
                 </label>
 
                 <label className="flex flex-col gap-2">
-                  <span className="label-text font-semibold">Apellidos</span>
+                  <span className="label-text font-semibold font-[family-name:var(--font-heading)]">Apellidos</span>
                   <input
-                    className="input input-bordered w-full rounded-md"
+                    className="input input-bordered w-full rounded-md font-[family-name:var(--font-body)]"
                     value={signupForm.lastNames}
                     onChange={(event) => updateSignupField("lastNames", event.target.value)}
                     required
@@ -261,9 +261,9 @@ export default function IngresarPage() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="flex flex-col gap-2">
-                  <span className="label-text font-semibold">Correo</span>
+                  <span className="label-text font-semibold font-[family-name:var(--font-heading)]">Correo</span>
                   <input
-                    className="input input-bordered w-full rounded-md"
+                    className="input input-bordered w-full rounded-md font-[family-name:var(--font-body)]"
                     type="email"
                     autoComplete="email"
                     value={signupForm.email}
@@ -273,9 +273,9 @@ export default function IngresarPage() {
                 </label>
 
                 <label className="flex flex-col gap-2">
-                  <span className="label-text font-semibold">Contraseña</span>
+                  <span className="label-text font-semibold font-[family-name:var(--font-heading)]">Contraseña</span>
                   <input
-                    className="input input-bordered w-full rounded-md"
+                    className="input input-bordered w-full rounded-md font-[family-name:var(--font-body)]"
                     type="password"
                     autoComplete="new-password"
                     minLength={8}
@@ -288,9 +288,9 @@ export default function IngresarPage() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="flex flex-col gap-2">
-                  <span className="label-text font-semibold">Edad</span>
+                  <span className="label-text font-semibold font-[family-name:var(--font-heading)]">Edad</span>
                   <input
-                    className="input input-bordered w-full rounded-md"
+                    className="input input-bordered w-full rounded-md font-[family-name:var(--font-body)]"
                     type="number"
                     min="16"
                     value={signupForm.age}
@@ -300,9 +300,9 @@ export default function IngresarPage() {
                 </label>
 
                 <label className="flex flex-col gap-2">
-                  <span className="label-text font-semibold">Género</span>
+                  <span className="label-text font-semibold font-[family-name:var(--font-heading)]">Género</span>
                   <select
-                    className="select select-bordered w-full rounded-md"
+                    className="select select-bordered w-full rounded-md font-[family-name:var(--font-body)]"
                     value={signupForm.gender}
                     onChange={(event) => updateSignupField("gender", event.target.value)}
                     required
@@ -321,9 +321,9 @@ export default function IngresarPage() {
 
               <div className="flex flex-col gap-5">
                 <label className="flex flex-col gap-2">
-                  <span className="label-text font-semibold">Municipio / ciudad</span>
+                  <span className="label-text font-semibold font-[family-name:var(--font-heading)]">Municipio / ciudad</span>
                   <input
-                    className="input input-bordered w-full rounded-md"
+                    className="input input-bordered w-full rounded-md font-[family-name:var(--font-body)]"
                     value={signupForm.city}
                     onChange={(event) => updateSignupField("city", event.target.value)}
                     required
@@ -331,11 +331,11 @@ export default function IngresarPage() {
                 </label>
 
                 <label className="flex flex-col gap-2">
-                  <span className="label-text font-semibold">
+                  <span className="label-text font-semibold font-[family-name:var(--font-heading)]">
                     Dirección donde se quiere llevar a cabo la escuela
                   </span>
                   <input
-                    className="input input-bordered w-full rounded-md"
+                    className="input input-bordered w-full rounded-md font-[family-name:var(--font-body)]"
                     value={signupForm.schoolAddress}
                     onChange={(event) => updateSignupField("schoolAddress", event.target.value)}
                     required
@@ -343,11 +343,11 @@ export default function IngresarPage() {
                 </label>
 
                 <label className="flex flex-col gap-2">
-                  <span className="label-text font-semibold">
+                  <span className="label-text font-semibold font-[family-name:var(--font-heading)]">
                     ¿Por qué quieres abrir una escuela?
                   </span>
                   <textarea
-                    className="textarea textarea-bordered min-h-32 w-full rounded-md"
+                    className="textarea textarea-bordered min-h-32 w-full rounded-md font-[family-name:var(--font-body)]"
                     value={signupForm.motivation}
                     onChange={(event) => updateSignupField("motivation", event.target.value)}
                     required
@@ -356,17 +356,17 @@ export default function IngresarPage() {
               </div>
 
               <button
-                className="btn btn-primary mt-2 w-full rounded-md shadow-none"
+                className="btn btn-primary mt-2 w-full rounded-md shadow-none font-[family-name:var(--font-heading)]"
                 type="submit"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Enviando..." : "Crear cuenta"}
               </button>
 
-              <p className="text-center text-sm">
+              <p className="text-center text-sm font-[family-name:var(--font-body)]">
                 ¿Ya tienes cuenta?{" "}
                 <button
-                  className="link link-primary font-bold"
+                  className="link link-primary font-bold font-[family-name:var(--font-heading)]"
                   type="button"
                   onClick={() => {
                     setMode("login");
@@ -380,7 +380,7 @@ export default function IngresarPage() {
           )}
 
           {message && (
-            <div className="alert alert-info mt-6 rounded-md">
+            <div className="alert alert-info mt-6 rounded-md font-[family-name:var(--font-body)]">
               <span>{message}</span>
             </div>
           )}

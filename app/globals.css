@@ -80,6 +80,11 @@
   --tracking-normal: 0em;
 }
 
+@theme {
+  --font-heading: var(--font-fredoka), sans-serif;
+  --font-body: var(--font-lora), serif;
+}
+
 :root,
 [data-theme] {
   --font-serif: Georgia, serif;

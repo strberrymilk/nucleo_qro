@@ -7,9 +7,10 @@ const LINKEDIN_URL = "https://www.linkedin.com/";
 const CONTACT_EMAIL = "mailto:nucleo.queretaro@gmail.com";
 
 const activities = [
-  "Sesiones educativas cada sábado",
-  "Curso de verano",
-  "Escuela para padres",
+  "Sesiones Semanales: Educación integral para niñas, niños y adolescentes",
+  "Curso de verano: Seguimiento académico",
+  "Escuela para padres: Formación y acompañamiento familiar",
+  "Desarrollo comunitario y escalabilidad del modelo",
 ];
 
 const partners = [
@@ -63,14 +64,14 @@ export default function Home() {
           <div className="absolute inset-0 bg-neutral/45" />
 
           <div className="relative z-10 mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center px-6 py-20">
-            <p className="mb-4 text-sm font-bold uppercase tracking-normal text-secondary">
-              Proyecto educativo en Querétaro
+            <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-secondary font-[family-name:var(--font-heading)]">
+              Proyecto educativo.
             </p>
-            <h1 className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-3xl text-4xl font-bold leading-tight uppercase tracking-wider sm:text-5xl lg:text-6x1 font-[family-name:var(--font-fredoka)]">
               Bienvenidos a Núcleo
             </h1>
-            <p className="mt-5 max-w-2xl text-lg font-medium text-white sm:text-xl">
-              Educación y comunidad para transformar El Chamizal.
+            <p className="mt-5 max-w-2xl text-lg text-white sm:text-xl font-[family-name:var(--font-body)]">
+              Educación y comunidad para transformar las infancias.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a className="btn btn-secondary rounded-md" href="#historia">
@@ -85,11 +86,26 @@ export default function Home() {
 
         <section id="historia" className="bg-base-100 px-6 py-16">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-3xl font-bold text-primary">Historia de Núcleo</h2>
-            <p className="mt-5 text-lg leading-8 text-base-content">
-              Núcleo fue creado a través del ILO Project del Eugenio Garza Sada
-              Leadership Program. Nació con la misión de transformar la comunidad
-              de El Chamizal mediante la educación y el acompañamiento integral.
+            <h2 className="text-3xl font-bold uppercase tracking-wider text-primary font-[family-name:var(--font-fredoka)]">
+              Historia de Núcleo
+              </h2>
+            <p className="mt-5 text-lg leading-8 text-base-content font-[family-name:var(--font-body)]">
+              Núcleo nació del encuentro de cuatro jóvenes que, al coincidir 
+              en el Eugenio Garza Sada Global Leadership Program, descubrieron 
+              una preocupación común: la educación en contextos de vulnerabilidad 
+              y el papel fundamental de la familia en el desarrollo de niñas, 
+              niños y adolescentes.
+            </p>
+            <p className="mt-5 text-lg leading-8 text-base-content font-[family-name:var(--font-body)]">
+              Lo que comenzó como una idea compartida, pronto se convirtió en una 
+              acción concreta en la comunidad de Bosques del Chamizal, en Querétaro. 
+              A partir de la escucha activa y el trabajo cercano con las familias, 
+              Núcleo fue construyendo un modelo propio que integra educación, 
+              acompañamiento familiar y desarrollo comunitario.
+            </p>
+            <p className="mt-5 text-lg leading-8 text-base-content font-[family-name:var(--font-body)]">
+              Hoy, Núcleo es más que un programa: es una comunidad que aprende,
+              colabora y se transforma desde dentro.
             </p>
           </div>
         </section>
@@ -97,18 +113,23 @@ export default function Home() {
         <section id="mision" className="bg-secondary px-6 py-16 text-secondary-content">
           <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2">
             <div>
-              <h2 className="text-3xl font-bold">Misión</h2>
-              <p className="mt-5 text-lg leading-8">
-                Empoderar a niños, niñas y adolescentes de El Chamizal a través de
-                la educación, el arte y el deporte, fomentando valores y habilidades
-                para la vida.
+              <h2 className="text-3xl font-bold uppercase tracking-wider font-[family-name:var(--font-fredoka)]">
+                Misión
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-base-content font-[family-name:var(--font-body)]">
+                Acompañar a niñas, niños, adolescentes y sus familias en el fortalecimiento de sus capacidades, 
+                a través de un modelo educativo colaborativo que promueve el desarrollo integral y la participación 
+                activa de la comunidad.
               </p>
             </div>
             <div>
-              <h2 className="text-3xl font-bold">Visión</h2>
-              <p className="mt-5 text-lg leading-8">
-                Un mundo donde todos tengan acceso a oportunidades equitativas,
-                comenzando por nuestra comunidad.
+              <h2 className="text-3xl font-bold uppercase tracking-wider font-[family-name:var(--font-fredoka)]">
+                Visión
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-base-content font-[family-name:var(--font-body)]">
+                Ser un modelo educativo replicable que transforme comunidades desde el fortalecimiento 
+                familiar, logrando que cada niña, niño y adolescente desarrolle su potencial en entornos 
+                seguros, colaborativos y sostenibles.
               </p>
             </div>
           </div>
@@ -116,11 +137,11 @@ export default function Home() {
 
         <section id="actividades" className="bg-base-100 px-6 py-16">
           <div className="mx-auto max-w-6xl">
-            <h2 className="text-3xl font-bold text-primary">¿Qué hacemos?</h2>
+            <h2 className="text-3xl font-bold uppercase tracking-wider text-primary font-[family-name:var(--font-fredoka)]">¿Qué hacemos?</h2>
             <div className="mt-8 grid gap-4 md:grid-cols-3">
               {activities.map((activity) => (
                 <div
-                  className="rounded-md border border-base-300 bg-base-200 p-5 font-bold"
+                  className="rounded-md border border-base-300 bg-base-200 p-5 font-semibold font-[family-name:var(--font-heading)]"
                   key={activity}
                 >
                   {activity}
@@ -132,7 +153,7 @@ export default function Home() {
 
         <section id="aliados" className="bg-accent px-6 py-16 text-accent-content">
           <div className="mx-auto max-w-6xl">
-            <h2 className="text-3xl font-bold">Aliados</h2>
+            <h2 className="text-3xl font-bold uppercase tracking-wider font-[family-name:var(--font-fredoka)]">Aliados</h2>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
               {partners.map((partner) => (
                 <div
@@ -166,7 +187,7 @@ export default function Home() {
 
         <section id="fotos" className="bg-base-100 px-6 py-16">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-3xl font-bold text-primary">Galería</h2>
+            <h2 className="text-3xl font-bold uppercase tracking-wider text-primary font-[family-name:var(--font-fredoka)]">Galería</h2>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
                 className="btn btn-outline btn-primary rounded-md"
@@ -190,10 +211,21 @@ export default function Home() {
 
         <section id="eventos" className="bg-secondary px-6 py-16 text-secondary-content">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-3xl font-bold">Eventos</h2>
-            <p className="mt-5 text-lg leading-8">
-              Posada Navideña Comunitaria, Carrera con Causa, Hackathon
-              Legislativo, Hult Prize, y más actividades comunitarias a lo largo
+            <h2 className="text-3xl font-bold uppercase tracking-wider font-[family-name:var(--font-fredoka)]">Eventos</h2>
+            <p className="mt-5 text-lg leading-8 font-[family-name:var(--font-body)]">
+              - Posada Navideña Comunitaria 
+            </p>
+              <p className="mt-1 text-lg leading-8 font-[family-name:var(--font-body)]">
+              - Carrera con Causa
+            </p>
+            <p className="mt-1 text-lg leading-8 font-[family-name:var(--font-body)]"> 
+              - Hackathon Legislativo
+            </p>
+            <p className="mt-1 text-lg leading-8 font-[family-name:var(--font-body)]"> 
+              - Hult Prize
+            </p>
+            <p className="mt-1 text-lg leading-8 font-[family-name:var(--font-body)]">
+              - Actividades comunitarias a lo largo
               del año.
             </p>
           </div>
@@ -202,8 +234,8 @@ export default function Home() {
         <section id="donar" className="bg-base-100 px-6 py-16">
           <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
-              <h2 className="text-3xl font-bold text-primary">Dona</h2>
-              <p className="mt-4 max-w-2xl text-lg leading-8">
+              <h2 className="text-3xl font-bold uppercase tracking-wider text-primary font-[family-name:var(--font-fredoka)]">Dona</h2>
+              <p className="mt-4 max-w-2xl text-lg leading-8 font-[family-name:var(--font-body)]">
                 Tu apoyo ayuda a sostener sesiones, materiales y experiencias
                 educativas para niñas, niños y adolescentes.
               </p>
@@ -223,52 +255,52 @@ export default function Home() {
       <footer className="footer sm:footer-horizontal bg-base-200 text-base-content p-10">
         <nav>
           <h6 className="footer-title">Programas</h6>
-          <a className="link link-hover" href="#actividades">
+          <a className="link link-hover font-[family-name:var(--font-body)]" href="#actividades">
             Sesiones educativas
           </a>
-          <a className="link link-hover" href="#actividades">
+          <a className="link link-hover font-[family-name:var(--font-body)]" href="#actividades">
             Curso de verano
           </a>
-          <a className="link link-hover" href="#actividades">
+          <a className="link link-hover font-[family-name:var(--font-body)]" href="#actividades">
             Escuela para padres
           </a>
-          <a className="link link-hover" href="#eventos">
+          <a className="link link-hover font-[family-name:var(--font-body)]" href="#eventos">
             Eventos comunitarios
           </a>
         </nav>
         <nav>
           <h6 className="footer-title">Núcleo</h6>
-          <a className="link link-hover" href="#historia">
+          <a className="link link-hover font-[family-name:var(--font-body)]r" href="#historia">
             Historia
           </a>
-          <a className="link link-hover" href="#mision">
+          <a className="link link-hover font-[family-name:var(--font-body)]" href="#mision">
             Misión & Visión
           </a>
-          <a className="link link-hover" href="#aliados">
+          <a className="link link-hover font-[family-name:var(--font-body)]" href="#aliados">
             Aliados
           </a>
-          <a className="link link-hover" href="#fotos">
+          <a className="link link-hover font-[family-name:var(--font-body)]" href="#fotos">
             Galería
           </a>
         </nav>
         <nav>
           <h6 className="footer-title">Participa</h6>
           <a
-            className="link link-hover"
+            className="link link-hover font-[family-name:var(--font-body)]"
             href={DONATION_URL}
             target="_blank"
             rel="noopener noreferrer"
           >
             Dona
           </a>
-          <a className="link link-hover" href="/ingresar">
+          <a className="link link-hover font-[family-name:var(--font-body)]" href="/ingresar">
             Ingresar
           </a>
-          <a className="link link-hover" href={CONTACT_EMAIL}>
+          <a className="link link-hover font-[family-name:var(--font-body)]" href={CONTACT_EMAIL}>
             Contacto
           </a>
           <a
-            className="link link-hover"
+            className="link link-hover font-[family-name:var(--font-body)]"
             href={DONATION_URL}
             target="_blank"
             rel="noopener noreferrer"
@@ -279,13 +311,13 @@ export default function Home() {
       </footer>
       <footer className="footer bg-base-200 text-base-content border-base-300 border-t px-10 py-4">
         <aside className="grid-flow-col items-center">
-          <span className="grid h-10 w-10 place-items-center rounded-full border border-base-300 bg-base-100 text-sm font-bold text-primary">
+          <span className="grid h-10 w-10 place-items-center rounded-full border border-base-300 bg-base-100 text-sm font-bold text-primary font-[family-name:var(--font-fredoka)]">
             N
           </span>
-          <p>
+          <p className="font-[family-name:var(--font-body)]">
             Núcleo - Proyecto Educativo
             <br />
-            Educación y comunidad para transformar El Chamizal.
+            Educación y comunidad para transformar.
           </p>
         </aside>
         <nav className="md:place-self-center md:justify-self-end">
