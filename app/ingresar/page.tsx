@@ -120,7 +120,7 @@ export default function IngresarPage() {
   };
 
   return (
-    <main className="{`${poppins.variable} ${inter.variable} min-h-screen bg-base-100 px-6 py-10`}">
+    <main className="min-h-screen bg-base-100 px-6 py-10">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <section className="pt-4 lg:pt-16">
           <Link className="link link-hover text-sm font-bold text-primary font-[family-name:var(--font-heading)]" href="/">
@@ -141,7 +141,7 @@ export default function IngresarPage() {
         <section className="rounded-md border border-base-300 bg-base-200 p-5 sm:p-8">
           <div className="mb-8 grid grid-cols-[1fr_auto_1fr] items-center rounded-md border border-base-300 bg-base-100 p-1">
             <button
-              className={`rounded-md px-4 py-3 text-sm font-bold transition font-[family-name:var(--font-heading)] ${
+              className={`rounded-md px-4 py-3 text-sm font-bold transition font-[family-name:var(--font-body)] ${
                 mode === "login" ? "bg-primary text-primary-content" : "text-base-content"
               }`}
               type="button"
@@ -154,7 +154,7 @@ export default function IngresarPage() {
             </button>
             <span className="mx-1 h-8 w-px bg-base-300" aria-hidden="true" />
             <button
-              className={`rounded-md px-4 py-3 text-sm font-bold transition font-[family-name:var(--font-heading)]  ${
+              className={`rounded-md px-4 py-3 text-sm font-bold transition font-[family-name:var(--font-body)]  ${
                 mode === "signup" ? "bg-primary text-primary-content" : "text-base-content"
               }`}
               type="button"
@@ -201,7 +201,7 @@ export default function IngresarPage() {
               </label>
 
               <button
-                className="btn btn-primary mt-1 w-full rounded-md shadow-none font-[family-name:var(--font-heading)]"
+                className="btn btn-primary mt-1 w-full rounded-md shadow-none font-[family-name:var(--font-body)]"
                 type="submit"
                 disabled={isSubmitting}
               >
@@ -210,14 +210,14 @@ export default function IngresarPage() {
 
               <div className="divider font-[family-name:var(--font-body)]">o</div>
 
-              <a className="btn btn-outline w-full rounded-md shadow-none font-[family-name:var(--font-heading)]" href="/api/auth/google">
+              <a className="btn btn-outline w-full rounded-md shadow-none font-[family-name:var(--font-body)]" href="/api/auth/google">
                 Continuar con Google
               </a>
 
               <p className="text-center text-sm font-[family-name:var(--font-body)]">
                 ¿No tienes cuenta?{" "}
                 <button
-                  className="link link-primary font-bold font-[family-name:var(--font-heading)]"
+                  className="link link-primary font-bold font-[family-name:var(--font-body)]"
                   type="button"
                   onClick={() => {
                     setMode("signup");
@@ -356,7 +356,7 @@ export default function IngresarPage() {
               </div>
 
               <button
-                className="btn btn-primary mt-2 w-full rounded-md shadow-none font-[family-name:var(--font-heading)]"
+                className="btn btn-primary mt-2 w-full rounded-md shadow-none font-[family-name:var(--font-body)]"
                 type="submit"
                 disabled={isSubmitting}
               >
@@ -366,7 +366,7 @@ export default function IngresarPage() {
               <p className="text-center text-sm font-[family-name:var(--font-body)]">
                 ¿Ya tienes cuenta?{" "}
                 <button
-                  className="link link-primary font-bold font-[family-name:var(--font-heading)]"
+                  className="link link-primary font-bold font-[family-name:var(--font-body)]"
                   type="button"
                   onClick={() => {
                     setMode("login");

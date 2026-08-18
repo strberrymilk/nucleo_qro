@@ -4,12 +4,14 @@ import Image from "next/image";
 import { useState } from "react";
 
 const navItems = [
-  { href: "#historia", label: "Historia" },
-  { href: "#mision", label: "Misión & Visión" },
-  { href: "#actividades", label: "Actividades" },
-  { href: "#aliados", label: "Aliados" },
-  { href: "#fotos", label: "Fotos" },
-  { href: "#eventos", label: "Eventos" },
+  { href: "/#historia", label: "Historia" },
+  { href: "/#comunidad", label: "Comunidad" },
+  { href: "/#mision", label: "Misión & Visión" },
+  { href: "/#actividades", label: "Actividades" },
+  { href: "/#programas", label: "Programas" },
+  { href: "/#aliados", label: "Aliados" },
+  { href: "/#fotos", label: "Fotos" },
+  { href: "/noticias", label: "Noticias" },
 ];
 
 const DONATION_URL = "https://www.gofundme.com/es-mx";
@@ -21,7 +23,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-base-300 bg-base-100/95 backdrop-blur">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <nav className="flex w-full items-center justify-between px-6 py-3 lg:px-10">
         <a className="flex items-center gap-3" href="#" onClick={closeMenu}>
           <span
             className="relative block h-11 w-11 shrink-0 overflow-hidden rounded-full border border-base-300 bg-base-200"
@@ -36,11 +38,11 @@ export default function Navbar() {
               priority
             />
           </span>
-          <span className="text-xl font-bold text-black">Núcleo</span>
+          <span className="text-xl font-bold text-black font-[family-name:var(--font-body)]">Núcleo</span>
         </a>
 
         <div className="hidden items-center gap-8 md:flex">
-          <ul className="flex items-center gap-1 text-sm font-semibold text-base-content">
+          <ul className="flex items-center gap-1 text-sm font-semibold text-base-content font-[family-name:var(--font-body)]">
             {navItems.map((item) => (
               <li key={item.href}>
                 <a
@@ -55,14 +57,14 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2">
             <a
-              className="btn btn-secondary btn-sm rounded-md shadow-none"
+              className="btn btn-secondary btn-sm rounded-md shadow-none font-[family-name:var(--font-heading)]"
               href={DONATION_URL}
               target="_blank"
               rel="noopener noreferrer"
             >
               Dona
             </a>
-            <a className="btn btn-primary btn-sm rounded-md shadow-none" href="/ingresar">
+            <a className="btn btn-primary btn-sm rounded-md shadow-none font-[family-name:var(--font-heading)]" href="/ingresar">
               Ingresar
             </a>
           </div>
@@ -81,7 +83,7 @@ export default function Navbar() {
 
       {menuOpen && (
         <div className="border-t border-base-300 bg-base-100 px-4 py-4 md:hidden">
-          <ul className="mx-auto flex max-w-6xl flex-col gap-2 text-sm font-semibold">
+          <ul className="mx-auto flex max-w-6xl flex-col gap-2 text-sm font-semibold font-[family-name:var(--font-body)]">
             {navItems.map((item) => (
               <li key={item.href}>
                 <a
@@ -97,7 +99,7 @@ export default function Navbar() {
 
           <div className="mx-auto mt-4 flex max-w-6xl gap-2">
             <a
-              className="btn btn-secondary flex-1 rounded-md shadow-none"
+              className="btn btn-secondary flex-1 rounded-md shadow-none font-[family-name:var(--font-heading)]"
               href={DONATION_URL}
               target="_blank"
               rel="noopener noreferrer"
@@ -105,7 +107,8 @@ export default function Navbar() {
             >
               Dona
             </a>
-            <a className="btn btn-primary flex-1 rounded-md shadow-none" href="/ingresar" onClick={closeMenu}>
+
+            <a className="btn btn-primary flex-1 rounded-md shadow-none font-[family-name:var(--font-heading)]" href="/ingresar" onClick={closeMenu}>
               Ingresar
             </a>
           </div>

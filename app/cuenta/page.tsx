@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import StatusBadge from "@/components/admin/StatusBadge";
+import StatusBadge from "@/components/ui/StatusBadge";
 import type { RequestStatus } from "@/lib/admin-dashboard";
 import { getCurrentUserProfileContext } from "@/lib/auth/profile";
 

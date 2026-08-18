@@ -4,7 +4,7 @@ import { updateSchoolRequestStatus } from "@/app/admin/actions";
 import AdminBarChart from "@/components/admin/AdminBarChart";
 import AdminGenderComparison from "@/components/admin/AdminGenderComparison";
 import AdminWordCloud from "@/components/admin/AdminWordCloud";
-import StatusBadge from "@/components/admin/StatusBadge";
+import StatusBadge from "@/components/ui/StatusBadge";
 import {
   buildDashboardMetrics,
   formatRoleLabel,
