@@ -8,8 +8,8 @@ const navItems = [
   { href: "/#comunidad", label: "Comunidad" },
   { href: "/#mision", label: "Misión & Visión" },
   { href: "/#actividades", label: "Actividades" },
-  { href: "/#programas", label: "Programas" },
   { href: "/#aliados", label: "Aliados" },
+  { href: "/#premios", label: "Premios" },
   { href: "/#fotos", label: "Fotos" },
   { href: "/noticias", label: "Noticias" },
 ];
